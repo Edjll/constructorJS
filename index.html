@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        body {
+            margin: 10px;
+            background-color: antiquewhite;
+        }
+        
+        button {
+            cursor: pointer;
+            outline: none;
+        }
+
+        #wrapper {
+            display: flex;
+            width: 100%;
+            font-size: 1.3em;
+            flex-wrap: wrap;
+        }
+
+        #setColor {
+            border: none;
+            width: 25px;
+            height: 100%;
+            outline: none;
+            cursor: pointer;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        .changeColor {
+            width: max-content;
+            display: inline-flex;
+            height: 25px;
+            border: 1px solid black;
+            background-color: white;
+        }
+
+        #changeColor {
+            width: 15px;
+            height: 100%;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            background-color: transparent;
+        }
+
+        .inputText {
+            width: calc(33.33333% - 10px);
+            outline: none;
+            padding: 10px;
+            margin: 5px;
+            box-sizing: border-box;
+            min-height: 44px;
+            background-color: #d1c3b0;
+            word-break: break-all;
+        }
+
+        .buttonsAdd {
+            width: calc(33.33333% - 10px);
+            padding: 10px;
+            margin: 5px;
+            box-sizing: border-box;
+            background-color: bisque;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 44px;
+        }
+
+        .btnAddInputText, .btnExtendInputText {
+            width: 20px;
+            height: 20px;
+            border: none;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .btnExtendInputText {
+            margin-right: 5px;
+        }
+
+        .btnAddInputText img, .btnExtendInputText img, .lblAddImage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .inpAddImage {
+            width: 0.0001px;
+            visibility: hidden;
+        }
+
+        .lblAddImage {
+            display: flex;
+            align-items: center;
+            width: 20px;
+            height: 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        #addInputText {
+            margin-top: 10px;
+        }
+
+        .inputTextWidth2 {
+            width: calc(66.666667% - 10px);
+        }
+
+        .inputTextWidth3 {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="changeColor">
+        <button id="setColor" style="color: #000000">Aa</button>
+        <input id="changeColor" type="color" value="#000000">
+    </div>
+    <div id="wrapper"></div>
+    <button id="addInputText">+</button>
+<script>
+  const divWrapper = document.getElementById('wrapper');
+  const selection = document.getSelection();
+  const btnChangeColor = document.getElementById('changeColor');
+  const btnSetColor = document.getElementById('setColor');
+  const btnAddInputText = document.getElementById('addInputText');
+  let flag = false;
+  let anchor;
+  let focus;
+
+  btnAddInputText.onclick = () => {
+    divWrapper.appendChild(createButtonsAdd(false));
+    divWrapper.appendChild(createButtonsAdd(true));
+    divWrapper.appendChild(createButtonsAdd(true));
+  }
+
+  // const range = document.createRange();
+  // range.setStart(divWrapper.lastChild, 0);
+  // selection.removeAllRanges();
+  // selection.addRange(range);
+
+  function createInputText(classWidth) {
+      const inputText = document.createElement('div');
+      inputText.className = 'inputText ' + classWidth;
+      inputText.setAttribute('contenteditable', 'true');
+      inputText.oninput = changeText;
+      return inputText;
+  }
+
+  function createButtonsAdd(createExtendButton) {
+      const buttonsAdd = document.createElement('div');
+      const btnAddInputText = document.createElement('button');
+      const imgAddInputText = document.createElement('img');
+      const inpAddImage = document.createElement('input');
+      const lblAddImage = document.createElement('label');
+      const imgAddImage = document.createElement('img');
+
+      buttonsAdd.className = 'buttonsAdd';
+
+      btnAddInputText.className = 'btnAddInputText';
+      btnAddInputText.onclick = replaceBtnWithInputText;
+
+      imgAddInputText.src = 'text.png';
+
+      inpAddImage.className = 'inpAddImage';
+      inpAddImage.type = 'file';
+
+      lblAddImage.className = 'lblAddImage';
+
+
+      lblAddImage.appendChild(inpAddImage);
+      imgAddImage.src = 'image.svg';
+      lblAddImage.appendChild(imgAddImage);
+
+      if (createExtendButton) {
+          const btnExtendInputText = document.createElement('button');
+          const imgExtendInputText = document.createElement('img');
+          imgExtendInputText.src = 'arrow.png';
+          btnExtendInputText.className = 'btnExtendInputText';
+          btnExtendInputText.onclick = extendInputText;
+          btnExtendInputText.appendChild(imgExtendInputText);
+          buttonsAdd.appendChild(btnExtendInputText);
+      }
+
+      btnAddInputText.appendChild(imgAddInputText);
+      buttonsAdd.appendChild(btnAddInputText);
+      buttonsAdd.appendChild(lblAddImage);
+      return buttonsAdd;
+  }
+
+  function extendInputText() {
+    if (this.parentNode.previousSibling.className.indexOf('inputTextWidth2') != -1) {
+        this.parentNode.previousSibling.className = this.parentNode.previousSibling.className.replace(/inputTextWidth2/g, '') + 'inputTextWidth3';
+    } else {
+        this.parentNode.previousSibling.className += ' inputTextWidth2';
+    }
+    this.parentNode.remove();
+  }
+
+  function replaceBtnWithInputText() {
+    const classNameMatch = this.parentNode.className.match(/inputTextWidth3|inputTextWidth2/);
+    if (classNameMatch != null) {
+        this.parentNode.after(createInputText(classNameMatch[0]));
+    } else {
+        this.parentNode.after(createInputText(''));
+    }
+    this.parentNode.remove();
+  }
+
+  btnAddInputText.click();
+
+  function changeText() {
+    if (this.childNodes.length == 1 && this.childNodes[0].nodeName == 'BR') {
+        this.childNodes[0].remove();
+    }
+    if (this.childNodes.length == 0 || this.firstChild.nodeType == 3) {
+      const divChild = document.createElement('div');
+      divChild.textContent = this.firstChild.textContent;
+      this.firstChild.remove();
+      this.appendChild(divChild);
+    }
+    this.childNodes.forEach(node => {
+      node.childNodes.forEach(nodeChild => {
+        if (nodeChild.nodeType == 3) {
+          const newLastChild = document.createElement('span');
+          newLastChild.style.color = btnChangeColor.value;
+          newLastChild.textContent = nodeChild.textContent;
+          nodeChild.after(newLastChild);
+
+          node.removeChild(nodeChild);
+
+          const range = document.createRange();
+          range.setStartAfter(newLastChild);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else {
+          if (nodeChild.childNodes.length > 0 && nodeChild.childNodes[0].nodeName == 'BR') {
+            nodeChild.before(document.createElement('br'));
+            nodeChild.remove();
+          }
+          if (nodeChild.textContent.length > 1) {
+            const newLastChild = document.createElement('span');
+            newLastChild.style.color = btnChangeColor.value;
+
+            let value;
+
+            if (selection.anchorOffset > 1) {
+              value = nodeChild.textContent[nodeChild.textContent.length - 1];
+              nodeChild.textContent = nodeChild.textContent.slice(0, nodeChild.textContent.length - 1);
+              nodeChild.after(newLastChild);
+            } else {
+              value = nodeChild.textContent[0];
+              nodeChild.textContent = nodeChild.textContent.slice(1, nodeChild.textContent.length);
+              nodeChild.before(newLastChild);
+            }
+            newLastChild.textContent = value;
+
+            const range = document.createRange();
+            range.setStartAfter(newLastChild);
+            selection.removeAllRanges();
+            selection.addRange(range);
+          }
+        }
+      });
+    });
+  }
+
+  btnChangeColor.onchange = () => {
+    btnSetColor.style.color = btnChangeColor.value;
+    btnSetColor.click();
+  }
+
+  btnSetColor.onclick = () => {
+    const color = btnChangeColor.value;
+
+    if (selection.anchorNode == null) {
+      return;
+    }
+
+    if (!checkIncludeNode(divWrapper, selection.anchorNode) && !checkIncludeNode(divWrapper, selection.focusNode)) {
+      return;
+    }
+
+    anchorFocus(divWrapper, selection);
+
+    setColor(divWrapper, color);
+
+    const range = document.createRange();
+    range.setStartAfter(focus.node);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
+  function setColor(nodeWrapper, color) {
+    if (anchor.node.parentNode == focus.node.parentNode && anchor.node.nodeName == 'SPAN') {
+      anchor.node.parentNode.style.color = color;
+      return;
+    }
+    nodeWrapper.childNodes.forEach(nodeChangeText => {
+      nodeChangeText.childNodes.forEach(node => {
+        node.childNodes.forEach(child => {
+          if (child == anchor.node.parentNode) {
+            flag = true;
+          }
+          if (flag && child.nodeName == 'SPAN') {
+            child.style.color = color;
+          }
+          if (child == focus.node.parentNode) {
+            flag = false;
+          }
+        });
+      });
+    });
+  }
+
+  function anchorFocus(node, selection) {
+    if (selection.anchorNode == selection.focusNode) {
+      if (selection.anchorOffset < selection.focusOffset) {
+        anchor = {node: selection.anchorNode, offset: selection.anchorOffset};
+        focus = {node: selection.focusNode, offset: selection.focusOffset};
+      } else {
+        focus = {node: selection.anchorNode, offset: selection.anchorOffset};
+        anchor = {node: selection.focusNode, offset: selection.focusOffset};
+      }
+    } else {
+      searchAnchor(node, selection);
+      searchFocus(node, selection);
+    }
+  }
+
+  function searchAnchor(node, selection) {
+    for (let i = 0; i < node.childNodes.length; i++) {
+      if (node.childNodes[i].nodeType == 3) {
+        if (node.childNodes[i] == selection.anchorNode) {
+          anchor = {node: selection.anchorNode, offset: selection.anchorOffset};
+          return true;
+        }
+        if (node.childNodes[i] == selection.focusNode) {
+          anchor = {node: selection.focusNode, offset: selection.focusOffset};
+          return true;
+        }
+      } else {
+        if (searchAnchor(node.childNodes[i], selection)) {
+          return true;
+        }
+      }
+    }
+  }
+
+  function searchFocus(node, selection) {
+    for (let i = node.childNodes.length - 1; i >= 0; i--) {
+      if (node.childNodes[i].nodeType == 3) {
+        if (node.childNodes[i] == selection.anchorNode) {
+          focus = {node: selection.anchorNode, offset: selection.anchorOffset};
+          return true;
+        }
+        if (node.childNodes[i] == selection.focusNode) {
+          focus = {node: selection.focusNode, offset: selection.focusOffset};
+          return true;
+        }
+      } else {
+        if (searchFocus(node.childNodes[i], selection)) {
+          return true;
+        }
+      }
+    }
+  }
+
+  function checkIncludeNode(nodeSearch, node) {
+    if (node.parentNode == document) {
+      return false;
+    }
+    if (node.parentNode == nodeSearch) {
+      return true;
+    }
+    return checkIncludeNode(nodeSearch, node.parentNode);
+  }
+
+</script>
+</body>
+</html>
