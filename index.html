@@ -76,6 +76,10 @@
             min-height: 44px;
         }
 
+        .buttonsAdd img {
+            width: 100%;
+        }
+
         .btnAddInputText, .btnExtendInputText {
             width: 20px;
             height: 20px;
@@ -175,6 +179,7 @@
 
       inpAddImage.className = 'inpAddImage';
       inpAddImage.type = 'file';
+      inpAddImage.onchange = addImgChange;
 
       lblAddImage.className = 'lblAddImage';
 
@@ -197,6 +202,22 @@
       buttonsAdd.appendChild(btnAddInputText);
       buttonsAdd.appendChild(lblAddImage);
       return buttonsAdd;
+  }
+
+  function addImgChange(e) {
+      const files = e.target.files;
+      const file = files[0];
+      const parent = this.parentNode.parentNode;
+      while (parent.firstChild) {
+          parent.firstChild.remove();
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+          const newImg = document.createElement('img');
+          newImg.src = event.target.result;
+          parent.appendChild(newImg);
+      };
+      reader.readAsDataURL(file);
   }
 
   function extendInputText() {
