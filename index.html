@@ -10,12 +10,18 @@
 
         body {
             margin: 10px;
-            background-color: antiquewhite;
+            background-color: #1f1f1f;
+            display: flex;
+            flex-direction: column;
         }
-        
+
         button {
             cursor: pointer;
             outline: none;
+        }
+
+        img {
+            user-select: none;
         }
 
         #wrapper {
@@ -23,66 +29,145 @@
             width: 100%;
             font-size: 1.3em;
             flex-wrap: wrap;
+            font-family: Arial;
+            background-color: #3f424a;
         }
 
-        #setColor {
+        .editTextButtons {
+            display: flex;
+            background-color: #3f424a;
+            padding: 5px 0;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .setStyle {
             border: none;
-            width: 25px;
+            width: 30px;
             height: 100%;
             outline: none;
             cursor: pointer;
-            padding: 0;
+            padding: 5px;
             background-color: transparent;
+            font-size: 1em;
+        }
+
+        .changeColor:first-of-type {
+            border-top-left-radius: 5px;
+        }
+
+        #changeFontFamily {
+            width: 180px;
+        }
+
+        #changeFontFamily, #changeFontSize {
+            padding: 3px;
+            background-color: #45a2f8;
+        }
+
+        #changeFontFamily option, #changeFontSize option {
+            background-color: #45a2f8;
+        }
+
+        #changeFontFamily option:nth-of-type(odd), #changeFontSize option:nth-of-type(odd) {
+            background-color: #56a3e2;
+        }
+
+        #changeFontSize {
+            width: 80px;
         }
 
         .changeColor {
             width: max-content;
             display: inline-flex;
-            height: 25px;
+            height: 30px;
             border: 1px solid black;
-            background-color: white;
+            background-color: #45a2f8;
+            margin: 0 5px;
         }
 
-        #changeColor {
-            width: 15px;
+        .changeColor label {
+            display: flex;
+            align-items: center;
+            width: 30px;
             height: 100%;
-            padding: 0;
+            padding: 0 5px;
             box-sizing: border-box;
             outline: none;
             border: none;
             background-color: transparent;
+            border-left: 1px solid black;
+        }
+
+        .changeColor label input {
+            display: none;
+        }
+
+        .changeColor img {
+            width: 100%;
+        }
+
+        .divRowWrapper {
+            display: flex;
+            width: 100%;
+        }
+
+        .inputTextWrapper, .buttonsAddWrapper {
+            width: 100%;
+            position: relative;
+            display: flex;
+            box-sizing: border-box;
+            min-height: 64px;
+            border-radius: 2px;
+            padding: 5px 0;
+        }
+
+        .inputTextWrapper:focus-within, .buttonsAddWrapper:focus {
+            outline: none;
         }
 
         .inputText {
-            width: calc(33.33333% - 10px);
+            width: 100%;
+            height: 100%;
             outline: none;
-            padding: 10px;
-            margin: 5px;
-            box-sizing: border-box;
-            min-height: 44px;
-            background-color: #d1c3b0;
             word-break: break-all;
+            padding: 10px;
+            border-radius: 2px;
+            box-sizing: border-box;
+            transition: box-shadow 0.2s;
+            margin: 0 5px;
+        }
+
+        .inputText div {
+            width: 100%;
         }
 
         .buttonsAdd {
-            width: calc(33.33333% - 10px);
-            padding: 10px;
-            margin: 5px;
-            box-sizing: border-box;
-            background-color: bisque;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 44px;
+            padding: 10px;
+            border-radius: 2px;
+            box-sizing: border-box;
+            transition: box-shadow 0.2s;
+            margin: 0 5px;
+        }
+
+        .buttonsAdd:focus {
+            outline: none;
         }
 
         .buttonsAdd img {
             width: 100%;
+            border-radius: 3px;
         }
 
         .btnAddInputText, .btnExtendInputText {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             border: none;
             background-color: transparent;
             padding: 0;
@@ -96,6 +181,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: box-shadow 0.2s;
+        }
+
+        .btnAddInputText img:hover, .btnExtendInputText img:hover, .lblAddImage img:hover {
+            box-shadow: 0 0 3px black;
         }
 
         .inpAddImage {
@@ -106,307 +196,681 @@
         .lblAddImage {
             display: flex;
             align-items: center;
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             box-sizing: border-box;
             cursor: pointer;
             margin-left: 5px;
         }
 
         #addInputText {
-            margin-top: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        #addInputText img {
+            width: 100%;
         }
 
         .inputTextWidth2 {
-            width: calc(66.666667% - 10px);
+            width: 200%;
         }
 
-        .inputTextWidth3 {
-            width: 100%;
+        .resizeLeft, .resizeRight {
+            width: 10px;
+            height: 10px;
+            display: block;
+            align-self: center;
+            position: absolute;
+            border: none;
+            cursor: e-resize;
+            padding: 0;
+            box-shadow: #185e8a 0px 0px 3px 1px;
+            border-radius: 1px;
         }
+
+        .resizeLeft {
+            left: 0;
+        }
+
+        .resizeRight {
+            right: 0;
+            z-index: 1;
+        }
+
+        .btnsWrapper {
+            display: flex;
+            width: 10%;
+            min-width: 50px;
+            height: 25px;
+            position: absolute;
+            top: -20px;
+            right: 10px;
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+        }
+
+        .lblFillColor, .btnDelete {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            width: 50%;
+            height: 100%;
+            border-right: 1px solid #d1c3b0;
+            cursor: pointer;
+            padding: 3px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btnDelete {
+            border-right: none;
+        }
+
+        .lblFillColor img, .btnDelete img {
+            height: 100%;
+        }
+
+        .lblFillColor input {
+            width: 0.0001px;
+            visibility: hidden;
+            padding: 0;
+            border: none;
+        }
+
+        .addRowButtonWrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            background-color: #3f424a;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
     </style>
 </head>
 <body>
+<div class="editTextButtons">
     <div class="changeColor">
-        <button id="setColor" style="color: #000000">Aa</button>
-        <input id="changeColor" type="color" value="#000000">
+        <button id="setColor" class="setStyle" style="color: #000000">Aa</button>
+        <label>
+            <input id="changeColor" type="color" value="#000000">
+            <img src="palette.png" alt="palette">
+        </label>
     </div>
-    <div id="wrapper"></div>
-    <button id="addInputText">+</button>
+    <div class="changeColor">
+        <button id="setBackgroundColor" class="setStyle" style="background-color: transparent">
+            <img src="fillColor.png" alt="fillColor">
+        </button>
+        <label>
+            <input id="changeBackgroundColor" type="color" value="#546b8e">
+            <img src="palette.png" alt="palette">
+        </label>
+    </div>
+    <div class="changeColor">
+        <select name="font" id="changeFontFamily" class="setStyle">
+            <option value="Arial" style="font-family: Arial">Arial</option>
+            <option value="Helvetica" style="font-family: Helvetica">Helvetica</option>
+            <option value="Verdana" style="font-family: Verdana">Verdana</option>
+            <option value="Trebuchet MS" style="font-family: Trebuchet MS">Trebuchet MS</option>
+            <option value="Gill Sans" style="font-family: Gill Sans">Gill Sans</option>
+            <option value="Times New Roman" style="font-family: Times New Roman">Times New Roman</option>
+            <option value="Georgia" style="font-family: Georgia">Georgia</option>
+            <option value="Andale Mono" style="font-family: Andale Mono">Andale Mono</option>
+        </select>
+    </div>
+    <div class="changeColor">
+        <select name="font" id="changeFontSize" class="setStyle">
+            <option value="1em">1 em</option>
+            <option value="1.1em">1.1 em</option>
+            <option value="1.2em">1.2 em</option>
+            <option value="1.3em">1.3 em</option>
+            <option value="1.4em">1.4 em</option>
+            <option value="1.5em">1.5 em</option>
+            <option value="1.6em">1.6 em</option>
+        </select>
+    </div>
+</div>
+<div id="wrapper"></div>
+<div class="addRowButtonWrapper">
+    <button id="addInputText">
+        <img src="addRow.png" alt="addRow">
+    </button>
+</div>
 <script>
-  const divWrapper = document.getElementById('wrapper');
-  const selection = document.getSelection();
-  const btnChangeColor = document.getElementById('changeColor');
-  const btnSetColor = document.getElementById('setColor');
-  const btnAddInputText = document.getElementById('addInputText');
-  let flag = false;
-  let anchor;
-  let focus;
+    const divWrapper = document.getElementById('wrapper');
+    const selection = document.getSelection();
+    const btnChangeColor = document.getElementById('changeColor');
+    const btnSetColor = document.getElementById('setColor');
+    const btnAddInputText = document.getElementById('addInputText');
+    let flag = false;
+    let anchor;
+    let focus;
+    const btnChangeBackgroundColor = document.getElementById('changeBackgroundColor');
+    const btnSetBackgroundColor = document.getElementById('setBackgroundColor');
+    let resizeBlockMoveWrapper;
+    const btnChangeFontFamily = document.getElementById('changeFontFamily');
+    const btnChangeFontSize = document.getElementById('changeFontSize');
+    let blockChangeActive = false;
+    let imageFillColor = new Image();
+    imageFillColor.src = 'fillColor.png';
 
-  btnAddInputText.onclick = () => {
-    divWrapper.appendChild(createButtonsAdd(false));
-    divWrapper.appendChild(createButtonsAdd(true));
-    divWrapper.appendChild(createButtonsAdd(true));
-  }
+    function convertColor(color, format) {
+        let colorParse;
+        let newColor = '';
 
-  // const range = document.createRange();
-  // range.setStart(divWrapper.lastChild, 0);
-  // selection.removeAllRanges();
-  // selection.addRange(range);
-
-  function createInputText(classWidth) {
-      const inputText = document.createElement('div');
-      inputText.className = 'inputText ' + classWidth;
-      inputText.setAttribute('contenteditable', 'true');
-      inputText.oninput = changeText;
-      return inputText;
-  }
-
-  function createButtonsAdd(createExtendButton) {
-      const buttonsAdd = document.createElement('div');
-      const btnAddInputText = document.createElement('button');
-      const imgAddInputText = document.createElement('img');
-      const inpAddImage = document.createElement('input');
-      const lblAddImage = document.createElement('label');
-      const imgAddImage = document.createElement('img');
-
-      buttonsAdd.className = 'buttonsAdd';
-
-      btnAddInputText.className = 'btnAddInputText';
-      btnAddInputText.onclick = replaceBtnWithInputText;
-
-      imgAddInputText.src = 'text.png';
-
-      inpAddImage.className = 'inpAddImage';
-      inpAddImage.type = 'file';
-      inpAddImage.onchange = addImgChange;
-
-      lblAddImage.className = 'lblAddImage';
-
-
-      lblAddImage.appendChild(inpAddImage);
-      imgAddImage.src = 'image.svg';
-      lblAddImage.appendChild(imgAddImage);
-
-      if (createExtendButton) {
-          const btnExtendInputText = document.createElement('button');
-          const imgExtendInputText = document.createElement('img');
-          imgExtendInputText.src = 'arrow.png';
-          btnExtendInputText.className = 'btnExtendInputText';
-          btnExtendInputText.onclick = extendInputText;
-          btnExtendInputText.appendChild(imgExtendInputText);
-          buttonsAdd.appendChild(btnExtendInputText);
-      }
-
-      btnAddInputText.appendChild(imgAddInputText);
-      buttonsAdd.appendChild(btnAddInputText);
-      buttonsAdd.appendChild(lblAddImage);
-      return buttonsAdd;
-  }
-
-  function addImgChange(e) {
-      const files = e.target.files;
-      const file = files[0];
-      const parent = this.parentNode.parentNode;
-      while (parent.firstChild) {
-          parent.firstChild.remove();
-      }
-      const reader = new FileReader();
-      reader.onload = (event) => {
-          const newImg = document.createElement('img');
-          newImg.src = event.target.result;
-          parent.appendChild(newImg);
-      };
-      reader.readAsDataURL(file);
-  }
-
-  function extendInputText() {
-    if (this.parentNode.previousSibling.className.indexOf('inputTextWidth2') != -1) {
-        this.parentNode.previousSibling.className = this.parentNode.previousSibling.className.replace(/inputTextWidth2/g, '') + 'inputTextWidth3';
-    } else {
-        this.parentNode.previousSibling.className += ' inputTextWidth2';
+        switch (format) {
+            case 'rgb':
+                colorParse = color.replace(/rgb\(|\)/g, '').match(/\d+/g);
+                colorParse.forEach((number, index) => {
+                    newColor += (Number(number) > 30) ? (Number(number) - 30) : ('0');
+                    if (index != colorParse.length - 1) {
+                        newColor += ', ';
+                    }
+                });
+                return 'rgb(' + newColor + ')';
+            case 'hex':
+                colorParse = color.match(/[^#]{2}/g);
+                colorParse.forEach((number, index) => {
+                    let numberConvert = (parseInt(number, 16) > 30) ? ((parseInt(number, 16) - 30).toString(16)) : ('00');
+                    if (numberConvert.length == 1) {
+                        numberConvert = '0' + numberConvert;
+                    }
+                    newColor += numberConvert;
+                });
+                return '#' + newColor;
+        }
+        return;
     }
-    this.parentNode.remove();
-  }
 
-  function replaceBtnWithInputText() {
-    const classNameMatch = this.parentNode.className.match(/inputTextWidth3|inputTextWidth2/);
-    if (classNameMatch != null) {
-        this.parentNode.after(createInputText(classNameMatch[0]));
-    } else {
-        this.parentNode.after(createInputText(''));
-    }
-    this.parentNode.remove();
-  }
+    function focusBlock() {
+        if (blockChangeActive) {
+            return;
+        }
 
-  btnAddInputText.click();
+        const boxShadowColor = convertColor(this.firstChild.style.backgroundColor, 'rgb');
 
-  function changeText() {
-    if (this.childNodes.length == 1 && this.childNodes[0].nodeName == 'BR') {
-        this.childNodes[0].remove();
-    }
-    if (this.childNodes.length == 0 || this.firstChild.nodeType == 3) {
-      const divChild = document.createElement('div');
-      divChild.textContent = this.firstChild.textContent;
-      this.firstChild.remove();
-      this.appendChild(divChild);
-    }
-    this.childNodes.forEach(node => {
-      node.childNodes.forEach(nodeChild => {
-        if (nodeChild.nodeType == 3) {
-          const newLastChild = document.createElement('span');
-          newLastChild.style.color = btnChangeColor.value;
-          newLastChild.textContent = nodeChild.textContent;
-          nodeChild.after(newLastChild);
+        this.firstChild.style.boxShadow = boxShadowColor + ' 0px 0px 3px 1px';
 
-          node.removeChild(nodeChild);
+        const btnResizeLeft = document.createElement('div');
+        const btnResizeRight = document.createElement('div');
+        const btnsWrapper = document.createElement('div');
+        const lblFillColor = document.createElement('label');
+        const inpFillColor = document.createElement('input');
+        const imgFillColor = imageFillColor.cloneNode(true);
+        const btnDelete = document.createElement('div');
+        const imgDelete = document.createElement('img');
 
-          const range = document.createRange();
-          range.setStartAfter(newLastChild);
-          selection.removeAllRanges();
-          selection.addRange(range);
+        btnsWrapper.style.backgroundColor = this.firstChild.style.backgroundColor.replace(/rgb/, 'rgba').replace(/\)/, ', 0.7)');
+
+        imgDelete.src = 'delete.png';
+
+        inpFillColor.type = 'color';
+        inpFillColor.value = '#546b8e';
+
+        btnsWrapper.className = 'btnsWrapper';
+        lblFillColor.className = 'lblFillColor';
+
+        lblFillColor.style.borderRightColor = boxShadowColor;
+
+        btnDelete.className = 'btnDelete';
+
+        btnDelete.onclick = deleteBlock;
+        lblFillColor.onclick = changeBlockBackground;
+
+        btnDelete.appendChild(imgDelete);
+        lblFillColor.appendChild(imgFillColor);
+        lblFillColor.appendChild(inpFillColor);
+        btnsWrapper.appendChild(lblFillColor);
+        btnsWrapper.appendChild(btnDelete);
+        this.appendChild(btnsWrapper);
+
+        btnResizeLeft.className = 'resizeLeft';
+        btnResizeLeft.onmousedown = resizeBlockDown;
+        btnResizeLeft.onmouseup = resizeBlockUp;
+        btnResizeLeft.style.backgroundColor = this.firstChild.style.backgroundColor;
+        btnResizeLeft.style.boxShadow = boxShadowColor + ' 0px 0px 3px 1px';
+
+        btnResizeRight.className = 'resizeRight';
+        btnResizeRight.onmousedown = resizeBlockDown;
+        btnResizeRight.onmouseup = resizeBlockUp;
+        btnResizeRight.style.backgroundColor = this.firstChild.style.backgroundColor;
+        btnResizeRight.style.boxShadow = boxShadowColor + ' 0px 0px 3px 1px';
+
+        if (this.previousSibling == null && this.nextSibling == null) {
+            return;
+        } else if (this.previousSibling == null) {
+            this.appendChild(btnResizeRight);
+        } else if (this.nextSibling == null) {
+            this.appendChild(btnResizeLeft);
         } else {
-          if (nodeChild.childNodes.length > 0 && nodeChild.childNodes[0].nodeName == 'BR') {
-            nodeChild.before(document.createElement('br'));
-            nodeChild.remove();
-          }
-          if (nodeChild.textContent.length > 1) {
-            const newLastChild = document.createElement('span');
-            newLastChild.style.color = btnChangeColor.value;
+            this.appendChild(btnResizeLeft);
+            this.appendChild(btnResizeRight);
+        }
+    }
 
-            let value;
-
-            if (selection.anchorOffset > 1) {
-              value = nodeChild.textContent[nodeChild.textContent.length - 1];
-              nodeChild.textContent = nodeChild.textContent.slice(0, nodeChild.textContent.length - 1);
-              nodeChild.after(newLastChild);
-            } else {
-              value = nodeChild.textContent[0];
-              nodeChild.textContent = nodeChild.textContent.slice(1, nodeChild.textContent.length);
-              nodeChild.before(newLastChild);
+    function blurBlock() {
+        if (!blockChangeActive) {
+            this.firstChild.style.boxShadow = 'none';
+        }
+        const childs = this.childNodes;
+        for (let index = 0; index < childs.length; index++) {
+            if (!blockChangeActive && (childs[index].className == 'resizeLeft' || childs[index].className == 'resizeRight' || childs[index].className == 'btnsWrapper')) {
+                childs[index].remove();
+                index--;
             }
-            newLastChild.textContent = value;
-
-            const range = document.createRange();
-            range.setStartAfter(newLastChild);
-            selection.removeAllRanges();
-            selection.addRange(range);
-          }
         }
-      });
-    });
-  }
+    }
+    
+    function changeBlockBackground() {
+        blockChangeActive = true;
+        this.lastChild.onchange = () => {
+            this.parentNode.style.backgroundColor = this.lastChild.value + 'b3';
+            let outColor = convertColor(this.lastChild.value, 'hex');
+            this.style.borderRightColor = outColor;
 
-  btnChangeColor.onchange = () => {
-    btnSetColor.style.color = btnChangeColor.value;
-    btnSetColor.click();
-  }
+            for (let i = 0; i < this.parentNode.parentNode.children.length; i++) {
+                if (this.parentNode.parentNode.children[i].className.search(/buttonsAdd|inputText|resizeLeft|resizeRight/) != -1) {
+                    this.parentNode.parentNode.children[i].style.boxShadow = outColor + ' 0px 0px 3px 1px';
+                }
+                if (this.parentNode.parentNode.children[i].className.search(/resizeLeft|resizeRight/) != -1) {
+                    this.parentNode.parentNode.children[i].style.backgroundColor = this.lastChild.value;
+                }
+            }
 
-  btnSetColor.onclick = () => {
-    const color = btnChangeColor.value;
-
-    if (selection.anchorNode == null) {
-      return;
+            this.parentNode.parentNode.firstChild.style.backgroundColor = this.lastChild.value;
+            blockChangeActive = false;
+        }
     }
 
-    if (!checkIncludeNode(divWrapper, selection.anchorNode) && !checkIncludeNode(divWrapper, selection.focusNode)) {
-      return;
+    function deleteBlock() {
+        let focus;
+        if (this.parentNode.parentNode.previousSibling == null && this.parentNode.parentNode.nextSibling == null) {
+            this.parentNode.parentNode.parentNode.remove();
+            return;
+        }
+        if (this.parentNode.parentNode.previousSibling != null) {
+            focus = this.parentNode.parentNode.previousSibling;
+        } else if (this.parentNode.parentNode.nextSibling != null) {
+            focus = this.parentNode.parentNode.nextSibling;
+        }
+        this.parentNode.parentNode.remove();
+        if (focus != null) {
+            focus.focus();
+        }
     }
 
-    anchorFocus(divWrapper, selection);
-
-    setColor(divWrapper, color);
-
-    const range = document.createRange();
-    range.setStartAfter(focus.node);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  };
-
-  function setColor(nodeWrapper, color) {
-    if (anchor.node.parentNode == focus.node.parentNode && anchor.node.nodeName == 'SPAN') {
-      anchor.node.parentNode.style.color = color;
-      return;
+    function resizeBlockDown() {
+        blockChangeActive = true;
+        document.addEventListener('mouseup', resizeBlockUp);
+        resizeBlockMoveWrapper = resizeBlockMove.bind(this);
+        divWrapper.addEventListener('mousemove', resizeBlockMoveWrapper);
     }
-    nodeWrapper.childNodes.forEach(nodeChangeText => {
-      nodeChangeText.childNodes.forEach(node => {
-        node.childNodes.forEach(child => {
-          if (child == anchor.node.parentNode) {
-            flag = true;
-          }
-          if (flag && child.nodeName == 'SPAN') {
-            child.style.color = color;
-          }
-          if (child == focus.node.parentNode) {
-            flag = false;
-          }
+    
+    function resizeBlockMove(e) {
+        let resizeLeftDeltaX = Math.floor((this.parentNode.offsetLeft - e.pageX) / (this.parentNode.parentNode.offsetWidth / 300));
+        let resizeRightDeltaX = Math.floor((e.pageX - this.parentNode.offsetLeft - this.parentNode.offsetWidth) / (this.parentNode.parentNode.offsetWidth / 300));
+        let maxSize;
+        let minSize = 50;
+        if (this.parentNode.parentNode.childElementCount == 3) {
+            maxSize = 150;
+        } else {
+            maxSize = 200;
+        }
+        if (this.className == 'resizeLeft') {
+            if (Math.floor((this.parentNode.offsetLeft - e.pageX) / (this.parentNode.parentNode.offsetWidth / 300)) != 0) {
+                if (Number(this.parentNode.style.width.replace(/%/g, '')) <= maxSize && Number(this.parentNode.style.width.replace(/%/g, '')) >= minSize) {
+                    this.parentNode.style.width = Number(this.parentNode.style.width.replace(/%/g, '')) + resizeLeftDeltaX + '%';
+                    this.parentNode.previousSibling.style.width = Number(this.parentNode.previousSibling.style.width.replace(/%/g, '')) - resizeLeftDeltaX + '%';
+                }
+            }
+            if (Number(this.parentNode.previousSibling.style.width.replace(/%/g, '')) > maxSize) {
+                this.parentNode.previousSibling.style.width = maxSize + '%';
+            } else if (Number(this.parentNode.previousSibling.style.width.replace(/%/g, '')) < minSize) {
+                this.parentNode.previousSibling.style.width = minSize + '%';
+            }
+        } else if (this.className == 'resizeRight') {
+            if (Math.floor((e.pageX - this.parentNode.offsetLeft - this.parentNode.offsetWidth) / (this.parentNode.parentNode.offsetWidth / 300)) != 0) {
+                if (Number(this.parentNode.style.width.replace(/%/g, '')) <= maxSize && Number(this.parentNode.style.width.replace(/%/g, '')) >= minSize) {
+                    this.parentNode.style.width = Number(this.parentNode.style.width.replace(/%/g, '')) + resizeRightDeltaX + '%';
+                    this.parentNode.nextSibling.style.width = Number(this.parentNode.nextSibling.style.width.replace(/%/g, '')) - resizeRightDeltaX + '%';
+                }
+            }
+            if (Number(this.parentNode.nextSibling.style.width.replace(/%/g, '')) > maxSize) {
+                this.parentNode.nextSibling.style.width = maxSize + '%';
+            } else if (Number(this.parentNode.nextSibling.style.width.replace(/%/g, '')) < minSize) {
+                this.parentNode.nextSibling.style.width = minSize + '%';
+            }
+        }
+        if (Number(this.parentNode.style.width.replace(/%/g, '')) > maxSize) {
+            this.parentNode.style.width = maxSize + '%';
+        } else if (Number(this.parentNode.style.width.replace(/%/g, '')) < minSize) {
+            this.parentNode.style.width = minSize + '%';
+        }
+    }
+
+    function resizeBlockUp() {
+        blockChangeActive = false;
+        divWrapper.removeEventListener('mousemove', resizeBlockMoveWrapper);
+        document.removeEventListener('mouseup', resizeBlockUp);
+        selection.removeAllRanges();
+    }
+
+    btnAddInputText.onclick = () => {
+        const divRowWrapper = document.createElement('div');
+        divRowWrapper.className = 'divRowWrapper';
+
+        divRowWrapper.appendChild(createButtonsAdd(false));
+        divRowWrapper.appendChild(createButtonsAdd(true));
+        divRowWrapper.appendChild(createButtonsAdd(true));
+
+        divWrapper.appendChild(divRowWrapper);
+    }
+
+    function createInputText(width, background) {
+        const inputTextWrapper = document.createElement('div');
+        const inputText = document.createElement('div');
+
+        inputText.className = 'inputText';
+        inputText.setAttribute('contenteditable', 'true');
+        inputText.oninput = changeText;
+        inputText.style.backgroundColor = background;
+
+        inputTextWrapper.setAttribute('tabindex', '1');
+        inputTextWrapper.addEventListener('focusin', focusBlock);
+        inputTextWrapper.addEventListener('focusout', blurBlock);
+
+        inputTextWrapper.className = 'inputTextWrapper';
+        inputTextWrapper.style.width = width;
+        inputTextWrapper.appendChild(inputText);
+
+        return inputTextWrapper;
+    }
+
+    function createButtonsAdd(createExtendButton) {
+        const buttonsAddWrapper = document.createElement('div');
+        const buttonsAdd = document.createElement('div');
+        const btnAddInputText = document.createElement('button');
+        const imgAddInputText = document.createElement('img');
+        const inpAddImage = document.createElement('input');
+        const lblAddImage = document.createElement('label');
+        const imgAddImage = document.createElement('img');
+
+        buttonsAddWrapper.className = 'buttonsAddWrapper';
+
+        buttonsAdd.className = 'buttonsAdd';
+        buttonsAdd.style.backgroundColor = 'rgb(84, 107, 142)';
+
+        buttonsAddWrapper.setAttribute('tabindex', '1');
+        buttonsAddWrapper.addEventListener('focusin', focusBlock);
+        buttonsAddWrapper.addEventListener('focusout', blurBlock);
+
+        buttonsAddWrapper.style.width = '100%';
+
+        btnAddInputText.className = 'btnAddInputText';
+        btnAddInputText.onclick = replaceBtnWithInputText;
+
+        imgAddInputText.src = 'text2.png';
+
+        inpAddImage.className = 'inpAddImage';
+        inpAddImage.type = 'file';
+        inpAddImage.onchange = addImgChange;
+
+        lblAddImage.className = 'lblAddImage';
+
+
+        lblAddImage.appendChild(inpAddImage);
+        imgAddImage.src = 'image.png';
+        lblAddImage.appendChild(imgAddImage);
+
+        if (createExtendButton) {
+            const btnExtendInputText = document.createElement('button');
+            const imgExtendInputText = document.createElement('img');
+            imgExtendInputText.src = 'extendLeft.png';
+            btnExtendInputText.className = 'btnExtendInputText';
+            btnExtendInputText.onclick = extendInputText;
+            btnExtendInputText.appendChild(imgExtendInputText);
+            buttonsAdd.appendChild(btnExtendInputText);
+        }
+
+        btnAddInputText.appendChild(imgAddInputText);
+        buttonsAdd.appendChild(btnAddInputText);
+        buttonsAdd.appendChild(lblAddImage);
+        buttonsAddWrapper.appendChild(buttonsAdd);
+        return buttonsAddWrapper;
+    }
+
+    function addImgChange(e) {
+        const files = e.target.files;
+        const file = files[0];
+        const parent = this.parentNode.parentNode;
+        while (parent.firstChild) {
+            parent.firstChild.remove();
+        }
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const newImg = document.createElement('img');
+            newImg.src = event.target.result;
+            parent.appendChild(newImg);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function extendInputText() {
+        this.parentNode.parentNode.previousSibling.style.width = Number(this.parentNode.parentNode.previousSibling.style.width.replace(/%/, '')) + Number(this.parentNode.parentNode.style.width.replace(/%/, '')) + '%';
+        const nodeFocus = this.parentNode.parentNode.previousSibling.firstChild;
+        this.parentNode.parentNode.remove();
+        nodeFocus.focus();
+    }
+
+    function replaceBtnWithInputText() {
+        this.parentNode.parentNode.after(createInputText(this.parentNode.parentNode.style.width, this.parentNode.style.backgroundColor));
+        const nodeFocus = this.parentNode.parentNode.nextSibling.firstChild;
+        this.parentNode.parentNode.remove();
+        nodeFocus.focus();
+    }
+
+    btnAddInputText.click();
+
+    function changeText() {
+        if (this.childNodes.length == 1 && this.childNodes[0].nodeName == 'BR') {
+            this.childNodes[0].remove();
+        }
+        if (this.childNodes.length == 0 || this.firstChild.nodeType == 3) {
+            const divChild = document.createElement('div');
+            divChild.textContent = this.firstChild.textContent;
+            this.firstChild.remove();
+            this.appendChild(divChild);
+        }
+        this.childNodes.forEach(node => {
+            node.childNodes.forEach(nodeChild => {
+                if (nodeChild.nodeType == 3) {
+                    const newLastChild = document.createElement('span');
+                    newLastChild.style.color = btnChangeColor.value;
+                    newLastChild.style.backgroundColor = btnSetBackgroundColor.style.backgroundColor;
+                    newLastChild.style.fontFamily = btnChangeFontFamily.value;
+                    newLastChild.textContent = nodeChild.textContent;
+                    nodeChild.after(newLastChild);
+
+                    node.removeChild(nodeChild);
+
+                    const range = document.createRange();
+                    range.setStartAfter(newLastChild);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                } else {
+                    if (nodeChild.childNodes.length > 0 && nodeChild.childNodes[0].nodeName == 'BR') {
+                        nodeChild.before(document.createElement('br'));
+                        nodeChild.remove();
+                    }
+                    if (nodeChild.textContent.length > 1) {
+                        const newLastChild = document.createElement('span');
+                        newLastChild.style.color = btnChangeColor.value;
+                        newLastChild.style.backgroundColor = btnSetBackgroundColor.style.backgroundColor;
+                        newLastChild.style.fontFamily = btnChangeFontFamily.value;
+
+                        let value;
+
+                        if (selection.anchorOffset > 1) {
+                            value = nodeChild.textContent[nodeChild.textContent.length - 1];
+                            nodeChild.textContent = nodeChild.textContent.slice(0, nodeChild.textContent.length - 1);
+                            nodeChild.after(newLastChild);
+                        } else {
+                            value = nodeChild.textContent[0];
+                            nodeChild.textContent = nodeChild.textContent.slice(1, nodeChild.textContent.length);
+                            nodeChild.before(newLastChild);
+                        }
+                        newLastChild.textContent = value;
+
+                        const range = document.createRange();
+                        range.setStartAfter(newLastChild);
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+                    }
+                }
+            });
         });
-      });
-    });
-  }
+    }
 
-  function anchorFocus(node, selection) {
-    if (selection.anchorNode == selection.focusNode) {
-      if (selection.anchorOffset < selection.focusOffset) {
-        anchor = {node: selection.anchorNode, offset: selection.anchorOffset};
-        focus = {node: selection.focusNode, offset: selection.focusOffset};
-      } else {
-        focus = {node: selection.anchorNode, offset: selection.anchorOffset};
-        anchor = {node: selection.focusNode, offset: selection.focusOffset};
-      }
-    } else {
-      searchAnchor(node, selection);
-      searchFocus(node, selection);
+    btnChangeColor.onchange = () => {
+        btnSetColor.style.color = btnChangeColor.value;
+        btnSetColor.click();
     }
-  }
 
-  function searchAnchor(node, selection) {
-    for (let i = 0; i < node.childNodes.length; i++) {
-      if (node.childNodes[i].nodeType == 3) {
-        if (node.childNodes[i] == selection.anchorNode) {
-          anchor = {node: selection.anchorNode, offset: selection.anchorOffset};
-          return true;
-        }
-        if (node.childNodes[i] == selection.focusNode) {
-          anchor = {node: selection.focusNode, offset: selection.focusOffset};
-          return true;
-        }
-      } else {
-        if (searchAnchor(node.childNodes[i], selection)) {
-          return true;
-        }
-      }
+    btnChangeBackgroundColor.onchange = () => {
+        btnSetBackgroundColor.style.backgroundColor = btnChangeBackgroundColor.value;
+        btnSetBackgroundColor.click();
     }
-  }
 
-  function searchFocus(node, selection) {
-    for (let i = node.childNodes.length - 1; i >= 0; i--) {
-      if (node.childNodes[i].nodeType == 3) {
-        if (node.childNodes[i] == selection.anchorNode) {
-          focus = {node: selection.anchorNode, offset: selection.anchorOffset};
-          return true;
-        }
-        if (node.childNodes[i] == selection.focusNode) {
-          focus = {node: selection.focusNode, offset: selection.focusOffset};
-          return true;
-        }
-      } else {
-        if (searchFocus(node.childNodes[i], selection)) {
-          return true;
-        }
-      }
+    btnChangeFontFamily.onchange = () => {
+        btnChangeFontFamily.style.fontFamily = btnChangeFontFamily.value;
+        btnTextStyleClick('fontFamily', btnChangeFontFamily.value);
     }
-  }
 
-  function checkIncludeNode(nodeSearch, node) {
-    if (node.parentNode == document) {
-      return false;
+    btnChangeFontSize.onchange = () => {
+        btnTextStyleClick('fontSize', btnChangeFontSize.value);
     }
-    if (node.parentNode == nodeSearch) {
-      return true;
+
+    btnSetColor.onclick = () => {
+        btnTextStyleClick('color', btnChangeColor.value);
     }
-    return checkIncludeNode(nodeSearch, node.parentNode);
-  }
+
+    btnSetBackgroundColor.onclick = () => {
+        btnTextStyleClick('backgroundColor', btnChangeBackgroundColor.value);
+    }
+
+    function btnTextStyleClick(styleName, value = null) {
+        if (selection.anchorNode == null || (!checkIncludeNode(divWrapper, selection.anchorNode) && !checkIncludeNode(divWrapper, selection.focusNode))) {
+            return;
+        }
+
+        anchorFocus(divWrapper, selection);
+
+        if (anchor == undefined || focus == undefined) {
+            return;
+        }
+
+        setTextStyle(divWrapper, styleName, value);
+
+        const range = document.createRange();
+        range.setStartAfter(focus.node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
+    function setTextStyle(nodeWrapper, styleName, value) {
+        if (anchor.node.parentNode == focus.node.parentNode && anchor.node.nodeName == 'SPAN' && focus.node.nodeName == 'SPAN') {
+            anchor.node.parentNode.style[styleName] = value;
+            return;
+        }
+        nodeWrapper.childNodes.forEach(nodeRowWrapper => {
+            nodeRowWrapper.childNodes.forEach(nodeInputTextWrapper => {
+                nodeInputTextWrapper.childNodes.forEach(nodeChangeText => {
+                    nodeChangeText.childNodes.forEach(node => {
+                        node.childNodes.forEach(child => {
+                            if (child == anchor.node.parentNode) {
+                                flag = true;
+                            }
+                            if (flag && child.nodeName == 'SPAN') {
+                                child.style[styleName] = value;
+                            }
+                            if (child == focus.node.parentNode) {
+                                flag = false;
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    }
+
+    function anchorFocus(node, selection) {
+        if (selection.anchorNode == selection.focusNode) {
+            if (selection.anchorOffset < selection.focusOffset) {
+                anchor = {node: selection.anchorNode, offset: selection.anchorOffset};
+                focus = {node: selection.focusNode, offset: selection.focusOffset};
+            } else {
+                focus = {node: selection.anchorNode, offset: selection.anchorOffset};
+                anchor = {node: selection.focusNode, offset: selection.focusOffset};
+            }
+        } else {
+            searchAnchor(node, selection);
+            searchFocus(node, selection);
+        }
+    }
+
+    function searchAnchor(node, selection) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+            if (node.childNodes[i].nodeType == 3) {
+                if (node.childNodes[i] == selection.anchorNode) {
+                    anchor = {node: selection.anchorNode, offset: selection.anchorOffset};
+                    return true;
+                }
+                if (node.childNodes[i] == selection.focusNode) {
+                    anchor = {node: selection.focusNode, offset: selection.focusOffset};
+                    return true;
+                }
+            } else {
+                if (searchAnchor(node.childNodes[i], selection)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    function searchFocus(node, selection) {
+        for (let i = node.childNodes.length - 1; i >= 0; i--) {
+            if (node.childNodes[i].nodeType == 3) {
+                if (node.childNodes[i] == selection.anchorNode) {
+                    focus = {node: selection.anchorNode, offset: selection.anchorOffset};
+                    return true;
+                }
+                if (node.childNodes[i] == selection.focusNode) {
+                    focus = {node: selection.focusNode, offset: selection.focusOffset};
+                    return true;
+                }
+            } else {
+                if (searchFocus(node.childNodes[i], selection)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    function checkIncludeNode(nodeSearch, node) {
+        if (node.parentNode == document) {
+            return false;
+        }
+        if (node.parentNode == nodeSearch) {
+            return true;
+        }
+        return checkIncludeNode(nodeSearch, node.parentNode);
+    }
 
 </script>
 </body>
